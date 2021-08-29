@@ -30,23 +30,77 @@ List<BottomNavigationBarItem>items=[
 
 void onchangebottomnavbar(int index){
   currentIndex=index;
+  if( index==1)getsportsDate();
+  if(index==2)getscienceDate();
   emit(AppbottomNavbar());
 }
 
 List<dynamic>business=[];
 void getbusinessDate(){
   emit(GetBusinesslodingsstate());
-  Diohelper.getdata(url: 'v2/top-headlines',map: {'country':'eg','category':'business','apiKey':'3ceee06572a74113a892f78ef1a037d6'}).
+  if(business.length==0){
+    Diohelper.getdata(url: 'v2/top-headlines',map: {'country':'eg','category':'business','apiKey':'3ceee06572a74113a892f78ef1a037d6'}).
 
-  then((value) {
-   // print(value.data['articles'][1]['title']);
-    business= value.data['articles'];
-    print(business);
+    then((value) {
+      // print(value.data['articles'][1]['title']);
+      business= value.data['articles'];
+      print(business);
+      emit(GetBusinessdatasucsessstate());
+    }).catchError((error){
+      //print(error.toString());
+      emit(GetBusinessdataerrorsstate(error.toString()));
+    });
+  }
+  else{
     emit(GetBusinessdatasucsessstate());
-  }).catchError((error){
-    //print(error.toString());
-    emit(GetBusinessdataerrorsstate(error.toString()));
-  });
+  }
+
 }
+
+bool themeModebool=false;
+void changeTheme(){
+  themeModebool=!themeModebool;
+  emit(ThemeModeState());
+
+
+}
+
+  List<dynamic>sports=[];
+  void getsportsDate(){
+    emit(GetSportslodingsstate());
+    if(sports.length==0){  Diohelper.getdata(url: 'v2/top-headlines',map: {'country':'eg','category':'sports','apiKey':'3ceee06572a74113a892f78ef1a037d6'}).
+
+    then((value) {
+      // print(value.data['articles'][1]['title']);
+      sports= value.data['articles'];
+      print(sports);
+      emit(GetSportsdatasucsessstate());
+    }).catchError((error){
+      //print(error.toString());
+      emit(GetSportsdataerrorsstate(error.toString()));
+    });}else{emit(GetSportsdatasucsessstate());}
+
+  }
+
+
+
+  List<dynamic>science=[];
+  void getscienceDate(){
+    emit(GetSciencelodingsstate());
+    if(science.length==0){ Diohelper.getdata(url: 'v2/top-headlines',map: {'country':'eg','category':'science','apiKey':'3ceee06572a74113a892f78ef1a037d6'}).
+
+    then((value) {
+      // print(value.data['articles'][1]['title']);
+      science= value.data['articles'];
+      print(science);
+      emit(GetSciencedatasucsessstate());
+    }).catchError((error){
+      //print(error.toString());
+      emit(GetSciencedataerrorsstate(error.toString()));
+    });}else{
+      emit(GetSciencedatasucsessstate());
+    }
+
+  }
 
 }

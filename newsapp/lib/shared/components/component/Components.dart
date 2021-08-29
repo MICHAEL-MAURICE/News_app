@@ -51,10 +51,8 @@ validator: (s){
 
 
 
-Widget CardItem(articles){
-  return  Card(
-    elevation: 50.0,
-    child: Padding(
+Widget CardItem(articles,context){
+  return  Padding(
       padding: const EdgeInsets.all(20.0),
       child: Row(children: [
         Container(
@@ -78,7 +76,8 @@ Widget CardItem(articles){
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
-                Expanded(child: Text("${articles['title']}",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.w600),)),
+                Expanded(child: Text("${articles['title']}",
+                  style: Theme.of(context).textTheme.bodyText1,)),
                 Text("${articles['publishedAt']}",style: TextStyle(color: Colors.grey,fontSize: 18,fontWeight: FontWeight.w600))
 
               ],),
@@ -86,7 +85,7 @@ Widget CardItem(articles){
         ),
 
       ],),
-    ),
+
   );
 }
 

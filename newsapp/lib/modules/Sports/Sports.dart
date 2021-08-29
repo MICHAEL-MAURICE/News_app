@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newsapp/shared/Cubit/Cubit.dart';
 import 'package:newsapp/shared/Cubit/States.dart';
+import 'package:newsapp/shared/components/component/Components.dart';
 
 class Sports extends StatefulWidget {
   @override
@@ -12,10 +13,24 @@ class Sports extends StatefulWidget {
 class _SportsState extends State<Sports> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<Appcubit,AppState>(builder: (context,state){
+    return BlocConsumer<Appcubit,AppState>(
 
-      return  Container(child: Text("Sports",style: TextStyle(color: Colors.black,fontSize: 50.0),),);
-    }, listener: (context,state){});
+        builder: (context,state){
+          Appcubit cubit = Appcubit.get(context);
+          var list =cubit.sports;
+          if (list.length<1){
+            return CirclerProgressloadinh();}
+          else return  ListView.separated(
+              physics:BouncingScrollPhysics() ,
+              itemBuilder: (context,index){
+                return CardItem(list[index],context);
+              }, separatorBuilder: (context,index){
+            return Container(
+              height: 1.0,
+              color: Colors.grey,
+            );
+          }, itemCount: list.length);
+        }, listener: (context,state){});
 
 
 

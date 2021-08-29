@@ -19,16 +19,16 @@ class _BusniessState extends State<Busniess> {
         builder: (context,state){
           Appcubit cubit = Appcubit.get(context);
           var list =cubit.business;
-     if (state is GetBusinesslodingsstate){
+     if (list.length<1){
         return CirclerProgressloadinh();}
    else return  ListView.separated(
          physics:BouncingScrollPhysics() ,
          itemBuilder: (context,index){
-       return CardItem(list[index]);
+       return CardItem(list[index],context);
      }, separatorBuilder: (context,index){
        return Container(
          height: 1.0,
-         color: Colors.black,
+         color: Colors.grey,
        );
      }, itemCount: list.length);
     }, listener: (context,state){});

@@ -15,40 +15,40 @@ class Home_layout extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context)=>Appcubit()..getbusinessDate(),
-      
-      child: BlocConsumer<Appcubit,AppState>(
-        listener: (context,state){
+    return BlocConsumer<Appcubit,AppState>(
+      listener: (context,state){
 
-        },
-        builder: (context,state){
-          Appcubit cubit = Appcubit.get(context);
-          return Scaffold(
-            appBar: AppBar(
-              title: Text("News App"),
-              actions: [
-                IconButton(icon: Icon(Icons.search),onPressed: (){},)
-              ,IconButton(icon: Icon(Icons.settings),onPressed: (){},)
-
-              ],
-
-            ),
-
-            bottomNavigationBar: BottomNavigationBar(
-              items: cubit.items,
-              currentIndex: cubit.currentIndex,
-              onTap: (index)=>cubit.onchangebottomnavbar(index),
-
-            ),
-            body: cubit.screens[cubit.currentIndex],
+      },
+      builder: (context,state){
+        Appcubit cubit = Appcubit.get(context);
+        return Scaffold(
+          appBar: AppBar(
+            title: Text("News App"),
+            actions: [
+              IconButton(icon: Icon(Icons.search),onPressed: (){},)
+            ,IconButton(icon: Icon(Icons.brightness_6_outlined),onPressed: (){
 
 
+              cubit.changeTheme();
+              },)
 
-          );
+            ],
 
-        },
-      ),
+          ),
+
+          bottomNavigationBar: BottomNavigationBar(
+            items: cubit.items,
+            currentIndex: cubit.currentIndex,
+            onTap: (index)=>cubit.onchangebottomnavbar(index),
+
+          ),
+          body: cubit.screens[cubit.currentIndex],
+
+
+
+        );
+
+      },
     );
   }
 
