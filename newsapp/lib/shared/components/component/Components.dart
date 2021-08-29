@@ -47,58 +47,51 @@ validator: (s){
 );
 
 
-
-Widget CardItem(Map m,context)=>Card(
-elevation: 0.0,
-  color: Colors.transparent,
-  child:   Dismissible(
-    key: Key(m['id'].toString()),
-    background: Container(
-      padding: EdgeInsets.all(20.0),
-      color: Colors.red,
-
-    child: Row(
-      
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Icon(Icons.restore_from_trash_sharp,color: Colors.black,),
-      ],
-    ),
-    ),
-    onDismissed: (dirction){
+//
 
 
-    },
+
+Widget CardItem(articles){
+  return  Card(
+    elevation: 50.0,
     child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
+      padding: const EdgeInsets.all(20.0),
+      child: Row(children: [
+        Container(
+            height: 100,width: 100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              image:DecorationImage(
 
-mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
+                  fit: BoxFit.fill,
+                  image: NetworkImage('${articles['urlToImage']}')),
 
-            CircleAvatar(radius: 35,child: Center(child: Text("${m["time"]}" )),),
-Column(children: [
-      Text(m["title"],style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold),),
-      Text(m["date"]),
-],)
-           , Row(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            )
+        ),
+        SizedBox(width: 40.0,),
+        Expanded(
+          child: Container(
+            height: 100,
+            child: Column(
+
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                IconButton(onPressed: (){
 
-                }, icon: Icon(Icons.check_box,color: Colors.green,))
+                Expanded(child: Text("${articles['title']}",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.w600),)),
+                Text("${articles['publishedAt']}",style: TextStyle(color: Colors.grey,fontSize: 18,fontWeight: FontWeight.w600))
 
+              ],),
+          ),
+        ),
 
-              ],
-            ),
-
-          ]
-
-
-
-
-
-      ),
+      ],),
     ),
-  ),
-);
+  );
+}
+
+Widget CirclerProgressloadinh(){
+  return Center(child: CircularProgressIndicator(
+     strokeWidth: 5.0,color: Colors.blue,
+  ));
+}

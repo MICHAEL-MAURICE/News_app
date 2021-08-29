@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newsapp/network/Remote/DioHelper.dart';
 import 'package:newsapp/shared/Cubit/Cubit.dart';
 import 'package:newsapp/shared/Cubit/States.dart';
 
@@ -15,7 +16,7 @@ class Home_layout extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context)=>Appcubit(),
+      create: (context)=>Appcubit()..getbusinessDate(),
       
       child: BlocConsumer<Appcubit,AppState>(
         listener: (context,state){
@@ -41,6 +42,9 @@ class Home_layout extends StatelessWidget
 
             ),
             body: cubit.screens[cubit.currentIndex],
+
+
+
           );
 
         },

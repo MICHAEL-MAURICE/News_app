@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:newsapp/network/Remote/DioHelper.dart';
 
 import 'layout/Homelayout.dart';
 
 void main() {
+  Diohelper.init();
   runApp(MyApp());
 }
 
@@ -33,6 +35,7 @@ appBarTheme: AppBarTheme(
 ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           type: BottomNavigationBarType.fixed,
+        //  selectedItemColor: Colors.blue,
           backgroundColor: Colors.white,
           elevation: 0.0
         )
