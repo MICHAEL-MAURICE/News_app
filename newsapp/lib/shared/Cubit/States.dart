@@ -21,4 +21,12 @@
   final String error;
   GetSportsdataerrorsstate(this.error);
  }
+
+
+ class GetSearchlodingsstate extends AppState{}
+ class GetSearchdatasucsessstate extends AppState{}
+ class GetSearchdataerrorsstate extends AppState{
+  final String error;
+  GetSearchdataerrorsstate(this.error);
+ }
  class ThemeModeState extends AppState{}

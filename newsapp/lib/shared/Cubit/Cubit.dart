@@ -1,13 +1,11 @@
 
-
-
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newsapp/modules/Busness/Busness.dart';
 import 'package:newsapp/modules/Science/Science.dart';
 import 'package:newsapp/modules/Sports/Sports.dart';
+import 'package:newsapp/network/Local/CachHelper.dart';
 import 'package:newsapp/network/Remote/DioHelper.dart';
 import 'package:newsapp/shared/Cubit/States.dart';
 
@@ -58,9 +56,17 @@ void getbusinessDate(){
 }
 
 bool themeModebool=false;
-void changeTheme(){
-  themeModebool=!themeModebool;
-  emit(ThemeModeState());
+void changeTheme({bool? isDark} ){
+  if(isDark !=null) {
+    themeModebool = isDark;
+    emit(ThemeModeState());
+  }else {
+    themeModebool = !themeModebool;
+    CachHelper.setData(key: 'themeModebool', value: themeModebool).then((
+        value) {
+      emit(ThemeModeState());
+    });
+  }
 
 
 }
@@ -103,4 +109,24 @@ void changeTheme(){
 
   }
 
+
+  List <dynamic>Search=[];
+  void getsearchDate(String value  ){
+
+    emit(GetSearchlodingsstate());
+    if(Search.length==0){ Diohelper.getdata(url: 'v2/everything',map: {'q':'${value}','apiKey':'3ceee06572a74113a892f78ef1a037d6'}).
+
+    then((value) {
+      // print(value.data['articles'][1]['title']);
+      Search= value.data['articles'];
+      print(Search);
+      emit(GetSearchdatasucsessstate());
+    }).catchError((error){
+      //print(error.toString());
+      emit(GetSearchdataerrorsstate(error.toString()));
+    });}else{
+      emit(GetSearchdatasucsessstate());
+    }
+
+  }
 }

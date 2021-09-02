@@ -1,23 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:newsapp/network/Local/CachHelper.dart';
 import 'package:newsapp/network/Remote/DioHelper.dart';
 import 'package:newsapp/shared/Cubit/Cubit.dart';
 import 'package:newsapp/shared/Cubit/States.dart';
 
 import 'layout/Homelayout.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-void main() {
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await CachHelper.init();
   Diohelper.init();
-  runApp(MyApp());
+
+  bool? isDark =CachHelper.getData(key: 'themeModebool');
+  runApp(MyApp(isDark));
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
+  final  bool? isDark;
+  MyApp(this.isDark);
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
 
-      create: (BuildContext context) =>Appcubit()..getbusinessDate(),
+      create: (BuildContext context) =>Appcubit()..getbusinessDate()..changeTheme(isDark: isDark),
 
       child: BlocConsumer<Appcubit,AppState>(
          builder: (BuildContext context, state) {
